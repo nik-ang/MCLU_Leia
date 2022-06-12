@@ -26,19 +26,22 @@ void keyTyped()
     if (leia.player.position[0] < 6) leia.player.position[0]++;
 
   if (key == 'a' || key == 'A')
-    if (leia.player.position[0] > 2) leia.player.position[0]--;
+    if (leia.player.position[0] > 1) leia.player.position[0]--;
 
   if (key == 'w' || key == 'W')
     if (leia.player.position[1] < 6) leia.player.position[1]++;
 
   if (key == 's' || key == 'S')
-    if (leia.player.position[1] > 2) leia.player.position[1]--;
-}
+    if (leia.player.position[1] > 1) leia.player.position[1]--;
 
-//Interrupthandler
-void draw() {
-  background(0);
-  //camera(600, 600, 500, leia.position.x + 4 * leia.LED_distance, leia.position.y + 4 * leia.LED_distance, leia.position.z, 0, 0, -1);
-  camera(600 + mouseX, 600 + mouseY, 500, leia.position.x + 4 * leia.LED_distance, leia.position.y + 4 * leia.LED_distance, leia.position.z, 0, 0, -1);
-  leia.display();
-}
+  if (key == 'k' || key == 'K')
+    leia.shoot();
+  }
+
+  //Interrupthandler
+  void draw() {
+    background(0);
+    //camera(600, 600, 500, leia.position.x + 4 * leia.LED_distance, leia.position.y + 4 * leia.LED_distance, leia.position.z, 0, 0, -1);
+    camera(600 + mouseX, 600 + mouseY, 500, leia.position.x + 4 * leia.LED_distance, leia.position.y + 4 * leia.LED_distance, leia.position.z, 0, 0, -1);
+    leia.display();
+  }

@@ -9,6 +9,8 @@ class Leia
 
  
   private Player player;
+  private Bullet[] bullets;
+  private int bullet_count = 6;
   
 
   Leia()
@@ -28,6 +30,11 @@ class Leia
     this.position.z = 0;
     
     this.player = new Player();
+    this.bullets = new Bullet[bullet_count];
+    for (int i = 0; i < bullet_count; i++)
+    {
+      bullets[i] = new Bullet(); 
+    }
   }
   
   public void reset_grid()
@@ -59,18 +66,54 @@ class Leia
     
   }
   
-
-
+  public void shoot()
+  {
+    for (int i = 0; i < bullet_count; i++)
+    {
+      if (!bullets[i].shot)
+      {
+        bullets[i].shot = true;
+        bullets[i].position[0] = player.position[0];
+        bullets[i].position[1] = player.position[1];
+        bullets[i].position[2] = 1;
+        return;
+      }
+    }
+  }
+  
+  public void update_bullets()
+  {
+    for (int i = 0; i < bullet_count; i++)
+      bullets[i].update();
+  }
+  
+  public void display_bullets()
+  {
+    int[] bullet_color = {255, 0, 0};
+   for (int i = 0; i < bullet_count; i++)
+   {
+      if (!bullets[i].shot) continue;
+      int x = bullets[i].position[0];
+      int y = bullets[i].position[1];
+      int z = bullets[i].position[2];
+      LED_Grid[x][y][z].is_on = true;
+      LED_Grid[x][y][z].set_color(bullet_color);
+   }
+    
+  }
+  
   public void display()
   {
-    translate(4 * LED_distance,  - 4 * LED_distance, 3 * LED_distance);
+    translate(3 * LED_distance,  - 4 * LED_distance, 3 * LED_distance);
     noFill();
     stroke(255);
     box(8 * this.LED_distance);
-    translate(- 4 * LED_distance, 4 * LED_distance, - 3 * LED_distance);
+    translate(- 3 * LED_distance, 4 * LED_distance, - 3 * LED_distance);
     
     reset_grid();
     
+    display_bullets();
+    update_bullets();
     display_player();
     
     for (int i = 0; i < 8; i ++)
